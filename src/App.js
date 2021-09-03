@@ -1,7 +1,10 @@
 import './App.css';
+import React from 'react';
+import ReactDom from 'react-dom';
 import Game from './components/Game';
 
-function App() {
+
+export default function App() {
   return (
     <div className="App">
       <Game />
@@ -9,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+ReactDom.render(<Game />, document.getElementById("root"));

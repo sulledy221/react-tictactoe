@@ -1,12 +1,11 @@
-import {useState} from 'react';
-import { calculateWinner } from '../helper';
-import Board from "./Board"
+import React, { useState } from "react";
+import { calculateWinner } from "../helper";
+import Board from "./Board";
 
-
-export default function Game() {
+const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [stepNumber, setStepNumber] = useState(0)
-  const [xIsNext, setXIsNext] = useState(true);
+  const [stepNumber, setStepNumber] = useState(0);
+  const [xIsNext, setXisNext] = useState(true);
   const winner = calculateWinner(history[stepNumber]);
   const xO = xIsNext ? "X" : "O";
 
@@ -20,40 +19,37 @@ export default function Game() {
     squares[i] = xO;
     setHistory([...historyPoint, squares]);
     setStepNumber(historyPoint.length);
-    setXIsNext(!xIsNext);
+    setXisNext(!xIsNext);
   };
 
   const jumpTo = (step) => {
     setStepNumber(step);
-    setXIsNext(step % 2 === 0)
-  }
+    setXisNext(step % 2 === 0);
+  };
 
-const renderMoves = () => {
-  history.map((_step, move) => {
-    const destination = move ? `Go to move #${move}` : "Go to Start";
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{destination}</button>
-      </li>
-    );
-  });
-}
+  const renderMoves = () =>
+    history.map((_step, move) => {
+      const destination = move ? `Go to move #${move}` : "Go to Start";
+      return (
+        <li key={move}>
+          <button onClick={() => jumpTo(move)}>{destination}</button>
+        </li>
+      );
+    });
 
   return (
     <>
-    <h1>Tik-tak-toe</h1>
-    <Board squares={history[stepNumber]} onClick={handleClick}/>
-    <div className="info-wrapper">
-      <div>
-      <h3>History</h3>
-      {renderMoves()}
+      <h1>React Tic Tac Toe - With Hooks</h1>
+      <Board squares={history[stepNumber]} onClick={handleClick} />
+      <div className="info-wrapper">
+        <div>
+          <h3>History</h3>
+          {renderMoves()}
+        </div>
+        <h3>{winner ? "Winner: " + winner : "Next Player: " + xO}</h3>
       </div>
-    <h3>
-      {winner ? "Winner: " + winner : "Next Player: " + xO}
-    </h3>
-    </div>
-
     </>
-  )
+  );
+};
 
-}
+export default Game;
